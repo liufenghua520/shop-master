@@ -8,6 +8,8 @@ import com.qf.entity.BackUser;
 import com.qf.entity.UserRoleTable;
 import com.qf.service.IBackUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 
@@ -54,11 +56,20 @@ public class BackUserServiceImpl implements IBackUserService {
     }
 
     @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        BackUser user = backUserMapper.queryUserByUsername(username);
+        if (user==null){
+            throw new UsernameNotFoundException("sorry,该用户不存在");
+        }
+        return user;
+    }
+
+   /* @Override
     public BackUser loginCheck( String username,String password) {
         BackUser user = backUserMapper.queryUserByUsername(username);
         if (user!=null && user.getPassword().equals(password)){
             return user;
         }
         return null;
-    }
+    }*/
 }

@@ -20,7 +20,7 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping("/login")
+    /*@RequestMapping("/login")
     public String logincheck(String username, String password, Model model){
         BackUser user = backUserService.loginCheck(username,password);
         System.out.println(user);
@@ -29,5 +29,5 @@ public class LoginController {
             return "index";
         }
         return "redirect:/tologin?error=1";
-    }
+    }*/
 }

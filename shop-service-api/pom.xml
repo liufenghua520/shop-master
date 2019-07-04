@@ -12,6 +12,7 @@
     <artifactId>shop-service-api</artifactId>
 
     <dependencies>
+
         <dependency>
             <groupId>com.qf</groupId>
             <artifactId>shop-entity</artifactId>
