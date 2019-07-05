@@ -5,6 +5,8 @@ spring:
   thymeleaf:
     cache: false
 
+upload:
+  path: D:/DummyDir/
 
 dubbo:
   application:
@@ -13,3 +15,4 @@ dubbo:
     address: zookeeper://192.168.118.168:2181
   consumer:
     check: false
+

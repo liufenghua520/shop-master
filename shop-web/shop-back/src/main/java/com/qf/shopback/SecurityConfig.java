@@ -32,7 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .mvcMatchers("/resources/**").permitAll()
                 .mvcMatchers("/").authenticated()
-                .anyRequest().access("@perssionHandler.hasPerssion(request,authentication)")
+//                .anyRequest().access("@perssionHandler.hasPerssion(request,authentication)")
+                .anyRequest().authenticated()
             .and()
             .csrf().disable()
             .headers().frameOptions().sameOrigin();
