@@ -10,4 +10,6 @@ public interface IPowerService {
     int insert(Power power);
 
     List<Power> queryPowersByRid(Integer rid);
+
+    int deletePower(Integer id);
 }

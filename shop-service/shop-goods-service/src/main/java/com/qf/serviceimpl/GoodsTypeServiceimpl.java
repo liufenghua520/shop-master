@@ -21,7 +21,7 @@ public class GoodsTypeServiceimpl implements IGoodTypeService {
 
     @Override
     public List<GoodsType> goodsTypeList() {
-        return goodsTypeMapper.selectList(null);
+        return goodsTypeMapper.queryList();
     }
 
     @Override
@@ -29,4 +29,16 @@ public class GoodsTypeServiceimpl implements IGoodTypeService {
         goodsTypeMapper.insert(goodsType);
         return goodsType;
     }
+
+    @Override
+    public int deleteGoodsType(Integer id) {
+        return goodsTypeMapper.deleteById(id);
+    }
+
+    @Override
+    public List<GoodsType> queryTypesByGid(Integer gid) {
+        return goodsTypeMapper.queryTypesByGid(gid);
+    }
+
+
 }

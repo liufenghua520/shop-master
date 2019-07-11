@@ -56,9 +56,11 @@
                         <td th:text="${#dates.format(user.createtime, 'yyyy-MM-dd')}">Donec tortor diam</td>
                         <td>
                             <!-- Icons -->
-                            <a href="#" title="Edit"><img
+                            <a th:href="|/buser/toupdate?id=${user.id}|" title="Edit"><img
                                     src="resources/images/icons/pencil.png" alt="Edit" /></a>
-                            <a href="#" title="Delete"><img
+
+                            <!--删除职工-->
+                            <a th:href="|/buser/delete?id=${user.id}|" title="Delete"><img
                                     src="resources/images/icons/cross.png" alt="Delete" /></a>
 
                             <!-- 设置该职工所拥有的角色 -->

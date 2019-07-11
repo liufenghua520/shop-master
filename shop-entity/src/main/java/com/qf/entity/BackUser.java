@@ -6,15 +6,13 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @version 1.0
@@ -32,7 +30,9 @@ public class BackUser implements Serializable, UserDetails {
     private String password;
     private String name;
     private Integer sex;
-    private Date createtime = new Date();
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date createtime;
     private Integer status;
 
     @TableField(exist = false)

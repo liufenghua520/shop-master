@@ -52,4 +52,10 @@ public class RoleController {
         roleService.updateRolePower(rid, pids);
         return "succ";
     }
+
+    @RequestMapping("/delete")
+    public String deleteRole(Integer id) {
+        roleService.deleteRole(id);
+        return "redirect:/role/list";
+    }
 }

@@ -1,6 +1,7 @@
 package com.qf.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,4 +24,10 @@ public class GoodsType implements Serializable {
     private Integer pid;
     private String gtname;
     private Integer status;
+
+    @TableField(exist = false)
+    private String gtpname;
+
+    @TableField(exist = false)
+    private boolean checked;
 }

@@ -1,6 +1,8 @@
 package com.qf.serviceimpl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qf.dao.PowerMapper;
 import com.qf.entity.Power;
 import com.qf.service.IPowerService;
@@ -33,4 +35,11 @@ public class PowerServiceImpl implements IPowerService {
     public List<Power> queryPowersByRid(Integer rid) {
         return powerMapper.queryPowersByRid(rid);
     }
+
+    @Override
+    public int deletePower(Integer id) {
+        return powerMapper.deleteById(id);
+    }
+
+
 }

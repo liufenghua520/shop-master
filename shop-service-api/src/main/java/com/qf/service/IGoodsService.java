@@ -8,4 +8,6 @@ public interface IGoodsService {
     List<Goods> queryGoods();
 
     Goods insertGoods(Goods goods);
+
+    int updateGoodsType(Integer gid, Integer[] tids);
 }

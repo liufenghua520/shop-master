@@ -62,10 +62,14 @@
                             <span th:case="3">按钮级权限</span>
                         </td>
                         <td>
-                            <!-- Icons --> <a href="#" title="Edit"><img
-                                src="resources/images/icons/pencil.png" alt="Edit" /></a> <a
-                                href="#" title="Delete"><img
-                                src="resources/images/icons/cross.png" alt="Delete" /></a> <a
+                            <!-- Icons:操作 -->
+                            <a href="#" title="Edit"><img
+                                src="resources/images/icons/pencil.png" alt="Edit" /></a>
+
+                            <a th:href="|/power/delete?id=${power.id}|" title="Delete"><img
+                                src="resources/images/icons/cross.png" alt="Delete" /></a>
+
+                            <a
                                 href="#" title="Edit Meta"><img
                                 src="resources/images/icons/hammer_screwdriver.png"
                                 alt="Edit Meta" /></a>
@@ -79,15 +83,16 @@
                             <div class="bulk-actions align-left">
                                 <a class="mybutton" onclick="open_dialog();">添加权限</a>
                             </div>
-                            <!--<div class="pagination">
-                                <a href="#" title="First Page">&laquo; First</a><a href="#"
-                                                                                   title="Previous Page">&laquo; Previous</a> <a href="#"
-                                                                                                                                 class="number" title="1">1</a> <a href="#" class="number"
-                                                                                                                                                                   title="2">2</a> <a href="#" class="number current" title="3">3</a>
-                                <a href="#" class="number" title="4">4</a> <a href="#"
-                                                                              title="Next Page">Next &raquo;</a><a href="#"
-                                                                                                                   title="Last Page">Last &raquo;</a>
-                            </div>-->
+                            <div class="pagination">
+                                <a href="#" title="First Page">&laquo; First</a>
+                                <a href="#" title="Previous Page">&laquo; Previous</a>
+                                 <a href="#" class="number" title="1">1</a>
+                                 <a href="#" class="number" title="2">2</a>
+                                 <a href="#" class="number current" title="3">3</a>
+                                <a href="#" class="number" title="4">4</a>
+                                <a href="#" title="Next Page">Next &raquo;</a>
+                                <a href="#" title="Last Page">Last &raquo;</a>
+                            </div>
                             <!-- End .pagination -->
                             <div class="clear"></div>
                         </td>

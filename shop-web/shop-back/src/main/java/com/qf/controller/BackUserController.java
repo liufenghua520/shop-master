@@ -35,11 +35,32 @@ public class BackUserController {
         return "redirect:/buser/list";
     }
 
-    @RequestMapping("updaterole")
+    @RequestMapping("/delete")
+    private String deleteUser(Integer id){
+        backUserService.deleteUser(id);
+        return "redirect:/buser/list";
+    }
+
+    @RequestMapping("/toupdate")
+    public String toUpdate(Integer id,Model model){
+        BackUser backUser = backUserService.queryById(id);
+        model.addAttribute("user",backUser);
+        return "updateuser";
+    }
+
+    @RequestMapping("/update")
+    public String updateUser(BackUser backUser){
+        System.out.println("backuser: "+backUser);
+        backUserService.updateUser(backUser);
+
+        return "redirect:/buser/list";
+    }
+
+
+    @RequestMapping("/updaterole")
     public String updateUserRole(Integer uid,Integer[] rid){
 
         backUserService.updateUserRole(uid, rid);
         return "redirect:/buser/list";
     }
-
 }

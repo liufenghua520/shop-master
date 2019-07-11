@@ -51,4 +51,10 @@ public class PowerController {
 //        System.out.println(powers);
         return powers;
     }
+
+    @RequestMapping("delete")
+    public String deletePower(Integer id){
+        powerService.deletePower(id);
+        return "redirect:/power/list";
+    }
 }

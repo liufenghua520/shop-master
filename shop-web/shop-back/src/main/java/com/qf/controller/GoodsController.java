@@ -1,18 +1,24 @@
 package com.qf.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.github.tobato.fastdfs.domain.StorePath;
+import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.qf.entity.Goods;
 import com.qf.service.IGoodsService;
+import com.qf.service.ISearchService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,6 +30,9 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/goods")
 public class GoodsController {
+
+    @Autowired
+    private FastFileStorageClient fastFileStorageClient;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -49,17 +58,28 @@ public class GoodsController {
     public String uploadImg(MultipartFile file){
 
         String filepath = "";
-
         //截取原图片后缀
         String originalFilename = file.getOriginalFilename();
         int index = originalFilename.lastIndexOf(".");
-        String houzui = originalFilename.substring(index);
+        String houzui = originalFilename.substring(index+1);
+
+        //获取文件上传路径
+        try {
+            StorePath storePath = fastFileStorageClient.uploadImageAndCrtThumbImage(
+                    file.getInputStream(),
+                    file.getSize(),
+                    houzui,
+                    null
+            );
+
+            filepath = storePath.getFullPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //设置文件名称
-        String filename = UUID.randomUUID().toString() + houzui;
-
+        /*String filename = UUID.randomUUID().toString() + houzui;
         filepath = uploadPath + filename;
-
         try (
                 InputStream is = file.getInputStream();
                 OutputStream os = new FileOutputStream(filepath);
@@ -67,7 +87,7 @@ public class GoodsController {
             IOUtils.copy(is,os);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         return "{\"filepath\":\""+filepath+"\"}";
     }
@@ -103,5 +123,11 @@ public class GoodsController {
         return "redirect:/goods/list";
     }
 
-
+    @ResponseBody
+    @RequestMapping("updateType")
+    public String updateType(Integer gid,@RequestParam("tids[]") Integer[] tids){
+        System.out.println("商品id:"+gid+" 选择的类别id："+ Arrays.toString(tids));
+        goodsService.updateGoodsType(gid,tids);
+        return "succ";
+    }
 }

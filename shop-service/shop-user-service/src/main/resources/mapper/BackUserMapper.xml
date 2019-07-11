@@ -27,7 +27,7 @@
         </collection>
     </resultMap>
 
-
+    <!--根据登陆的用户名查询器所拥有的权限-->
     <select id="queryUserByUsername" resultMap="BackUserMap">
         select *,p.id as powerid ,p.pid as powerfid , p.status as powerstatus
 		from back_user b

@@ -4,6 +4,7 @@
 <head>
     <base th:href="${#request.getContextPath() + '/'}"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--    <meta name="referrer" content="no-referrer">-->
     <title>Insert title here</title>
     <!-- Invalid Stylesheet. This makes stuff look pretty. Remove it if you want the CSS completely valid -->
     <!-- Reset Stylesheet -->
@@ -27,8 +28,17 @@
     <script type="text/javascript" src="resources/widget/dialog/jquery-ui-1.9.2.custom.min.js"></script>
     <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
 
+    <!-- 文件上传的插件 -->
     <script type="text/javascript" src="resources/widget/webuploader/webuploader.min.js"></script>
     <link rel="stylesheet" href="resources/widget/webuploader/webuploader.css">
+
+    <!-- 添加树形结构插件 ztree -->
+    <script type="text/javascript" src="resources/widget/zTree/jquery.ztree.all.min.js"></script>
+    <link rel="stylesheet" href="resources/widget/zTree/zTreeStyle/zTreeStyle.css">
+
+    <script charset="utf-8" src="resources/widget/kindeditor/kindeditor-all-min.js"></script>
+    <script charset="utf-8" src="resources/widget/kindeditor/lang/zh-CN.js"></script>
+    <link rel="stylesheet" href="resources/widget/kindeditor/themes/default/default.css" />
 
 </head>
 <body>
@@ -61,10 +71,10 @@
 
                         <td>
                             <img th:each="img : ${#strings.listSplit(goods.gimage,'|')}"
-                                 th:src="|/goods/getImage?imagepath=${img}|"
+                                 th:src="|http://192.168.118.168/${img}|"
                                  style="width: 100px; height: 80px; margin-right: 5px">
                         </td>
-                        <td th:text="${goods.ginfo}">Donec tortor diam</td>
+                        <td th:utext="${goods.ginfo}">Donec tortor diam</td>
                         <td th:text="${#numbers.formatCurrency(goods.gprice)}">Donec tortor diam</td>
                         <td th:text="${goods.gsave}">Donec tortor diam</td>
                         <td>
@@ -73,6 +83,9 @@
                                     src="resources/images/icons/pencil.png" alt="Edit" /></a>
                             <a href="#" title="Delete"><img
                                     src="resources/images/icons/cross.png" alt="Delete" /></a>
+                            <a th:onclick="|update_goodstype(${goods.id});|" title="Edit Meta">
+                                <img src="resources/images/icons/hammer_screwdriver.png"
+                                     alt="Edit Meta" /></a>
                         </td>
                     </tr>
                     </tbody>
@@ -107,6 +120,79 @@
 
 <script>
 
+    var goodid;
+    var zTreeObject;
+
+    /**
+     *  点击修改指定商品的类别
+     */
+    function update_goodstype(gid){
+        // alert("gid: "+gid)
+        goodid = gid ;
+
+        //ztree的核心配置对象
+        var setting = {
+            data:{
+                key:{
+                    name:"gtname"
+                },
+                simpleData:{
+                    enable:true,
+                    pIdKey:"pid"
+                }
+            },
+            view:{
+                //隐藏节点图标
+                showIcon:false
+            },
+            check:{
+                enable: true,
+                chkboxType: {"Y":"ps", "N":"s"}
+            }
+        };
+
+        //通过gid查询当前所有的类别及该商品所属的类别
+        $.get("/gtype/queryTypesByGid", {"gid":gid}, function(data){
+
+            //生成ztree树形结构
+            zTreeObject = $.fn.zTree.init($("#ztreeDiv"), setting, data);
+            zTreeObject.expandAll(true);//全部展开
+
+        },"json");
+
+        //弹出权限树的dialog让用户选择
+        $("#ztree_div").dialog({
+            title:"选择分类",
+            modal:true
+        });
+    }
+
+    /**
+     * 提交修改商品的类别
+     */
+    function update_gtypes(){
+
+        var gid = goodid;
+
+        //所选的类别id - 集合
+        var tids = new Array();
+
+        var checkedNodes = zTreeObject.getCheckedNodes(true);   //获取选择的权限节点
+        for(var i = 0; i < checkedNodes.length; i++){
+
+            tids.push(checkedNodes[i].id);
+        }
+
+        //ajax进行提交
+        $.post("/goods/updateType",{"gid":gid, "tids":tids}, function(data){
+            if(data == "succ"){
+                //关闭弹出框
+                $("#ztree_div").dialog("close");
+            }
+        },"text");
+    }
+
+    //文件上传初始化及基本配置
     $(function () {
         // 初始化Web Uploader
         var uploader = WebUploader.create({
@@ -133,7 +219,6 @@
         });
 
         //监听fileQueued事件，通过uploader.makeThumb来创建图片预览图
-
         uploader.on( 'fileQueued', function( file ) {
 
             // 创建缩略图
@@ -155,13 +240,26 @@
             //alert(file.name + "上传成功，上传后的路径为:" + response.filepath)
             var images = $("#gimage").val();
             if(images != ""){
-                images += "|";
+                images += "|";      //文件的路径使用 '|' 分隔开
             }
             images += response.filepath;
             $("#gimage").val(images);
         });
 
     })
+
+    //关闭标签过滤模式，保留所有标签
+    KindEditor.options.filterMode = false;
+    //KindEditor编辑器初始化及参数配置
+    KindEditor.ready(function(K) {
+        window.editor = K.create('#editor_id', {
+            allowFileManager : true,
+            allowPreviewEmoticons: true,
+            allowImageUpload: true
+
+        });
+    });
+
 
 
     //弹出添加商品的dialog
@@ -181,13 +279,21 @@
         商品名称：<input name="gname"/><br/>
         商品图片：
             <div id="filePicker">选择图片</div>
-            <div id="showPic" style="width: 600px; height: 150px; border: #ff0000 solid 1px"></div>
+            <div id="showPic" style="width: 600px; height: 150px; border: #ff0000 solid 1px"></div>   <!--生成图片缩略图的容器-->
             <input id="gimage" name="gimage"type="hidden" value=""/><br/>
         商品价格：<input name="gprice"/><br/>
         商品库存：<input name="gsave"><br>
-        商品描述：<textarea name="ginfo" rows="7" cols="5"></textarea><br>
+        商品描述：<textarea id="editor_id" style="width:700px;height:300px;" name="ginfo">
+                </textarea><br>
         <button type="submit">添加</button>
     </form>
+</div>
+
+<!-- zTree的弹出框-默认隐藏 -->
+<div id="ztree_div" style="display: none;">
+    <div id="ztreeDiv" class="ztree">
+    </div>
+    <button onclick="update_gtypes();" type="button">提交</button>
 </div>
 
 

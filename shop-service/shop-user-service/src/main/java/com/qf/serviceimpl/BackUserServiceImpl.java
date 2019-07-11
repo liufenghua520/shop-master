@@ -2,6 +2,8 @@ package com.qf.serviceimpl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.qf.dao.BackUserMapper;
 import com.qf.dao.UserRoleMapper;
 import com.qf.entity.BackUser;
@@ -29,13 +31,30 @@ public class BackUserServiceImpl implements IBackUserService {
 
     @Override
     public List<BackUser> queryAll() {
-
-        return backUserMapper.selectList(null);
+        
+        return  backUserMapper.selectList(null);
     }
 
     @Override
     public int addUser(BackUser backuser) {
         return backUserMapper.insert(backuser);
+    }
+
+    @Override
+    public int deleteUser(Integer id) {
+        return backUserMapper.deleteById(id);
+    }
+
+    @Override
+    public BackUser queryById(Integer id) {
+        BackUser user = backUserMapper.selectById(id);
+        return user;
+    }
+
+    @Override
+    public int updateUser(BackUser backUser) {
+
+        return backUserMapper.updateById(backUser);
     }
 
     @Override

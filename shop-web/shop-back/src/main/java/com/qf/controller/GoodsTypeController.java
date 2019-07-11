@@ -44,4 +44,18 @@ public class GoodsTypeController {
         return gtypeService.goodsTypeList();
     }
 
+    @RequestMapping("/delete")
+    public String deleteGoodsType(Integer id){
+        gtypeService.deleteGoodsType(id);
+        return "redirect:/gtype/list";
+    }
+
+    @ResponseBody
+    @RequestMapping("/queryTypesByGid")
+    public List<GoodsType> queryTypesByGid(Integer gid){
+
+        return gtypeService.queryTypesByGid(gid);
+    }
+
+
 }

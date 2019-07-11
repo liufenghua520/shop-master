@@ -1,6 +1,7 @@
 package com.qf.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +26,8 @@ public class Goods implements Serializable {
     private String ginfo;
     private String gimage;
     private BigDecimal gprice;
-    private Integer tid;
     private Integer gsave;
 
+    @TableField(exist = false)
+    private String gtype;
 }

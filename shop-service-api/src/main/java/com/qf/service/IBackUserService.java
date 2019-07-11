@@ -11,5 +11,11 @@ public interface IBackUserService extends UserDetailsService {
 
     int updateUserRole(Integer uid, Integer[] rid);
 
+    int deleteUser(Integer id);
+
+    BackUser queryById(Integer id);
+
+    int updateUser(BackUser backUser);
+
 //    BackUser loginCheck(String username,String password);
 }

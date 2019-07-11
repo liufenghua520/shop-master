@@ -13,4 +13,9 @@ public interface IGoodTypeService {
     List<GoodsType> goodsTypeList();
 
     GoodsType insertGoodsType(GoodsType goodsType);
+
+    int deleteGoodsType(Integer id);
+
+
+    List<GoodsType> queryTypesByGid(Integer gid);
 }
