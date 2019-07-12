@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.qf.dao.GoodsTypeMapper">
+
+    <!-- 查询出父类的名称：需用到链接查询 -->
+    <select id="queryList" resultType="com.qf.entity.GoodsType">
+        select gt1.*,gt2.gtname as gtpname from goods_type gt1 left join goods_type gt2 on gt1.pid = gt2.id
+
+    </select>
+
+    <select id="queryTypesByGid" resultType="com.qf.entity.GoodsType">
+        select gt.*,
+	    if((select gid from goods_type_table where gid = #{gid} and tid = gt.id),'true','false') as checked
+	    from goods_type gt;
+    </select>
+
+</mapper>
