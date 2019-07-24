@@ -3,7 +3,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.qf.dao.GoodsMapper">
-
-
-
+    <select id="queryByType" resultType="com.qf.entity.Goods">
+        select g.*
+			from goods g left join goods_type_table gtt on g.id = gtt.gid
+			left join goods_type gt on gtt.tid = gt.id
+        where gt.id = #{tid}
+    </select>
 </mapper>

@@ -11,6 +11,7 @@
         <module>shop-service</module>
         <module>shop-service-api</module>
         <module>shop-service-api</module>
+        <module>rabbitmq-java-demo</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

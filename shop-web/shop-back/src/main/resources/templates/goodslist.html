@@ -71,7 +71,7 @@
 
                         <td>
                             <img th:each="img : ${#strings.listSplit(goods.gimage,'|')}"
-                                 th:src="|http://192.168.118.168/${img}|"
+                                 th:src="|http://192.168.118.168:8080/${img}|"
                                  style="width: 100px; height: 80px; margin-right: 5px">
                         </td>
                         <td th:utext="${goods.ginfo}">Donec tortor diam</td>

@@ -1,0 +1,9 @@
+spring:
+  rabbitmq:
+    host: 192.168.118.168
+    virtual-host: /
+  mail:
+    host: smtp.sina.com
+    username: hellojerk@sina.com
+    password: lfh163914
+

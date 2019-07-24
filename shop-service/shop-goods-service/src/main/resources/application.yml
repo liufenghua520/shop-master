@@ -4,6 +4,14 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
+  rabbitmq:
+    host: 192.168.118.168
+    virtual-host: /
+
+  redis:
+    host: 192.168.118.168
+    password: root
+
 dubbo:
   application:
     name: goods_service

@@ -10,4 +10,8 @@ public interface IGoodsService {
     Goods insertGoods(Goods goods);
 
     int updateGoodsType(Integer gid, Integer[] tids);
+
+    Goods queryById(Integer gid);
+
+    List<Goods> queryByType(Integer tid);
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.dao.OrderMapper">
+    
+    <resultMap id="MyResultMap" type="com.qf.entity.Order">
+        <id property="orderid" column="orderid"/>
+        <result property="uid" column="uid"/>
+        <result property="person" column="person"/>
+        <result property="address" column="address"/>
+        <result property="phone" column="phone"/>
+        <result property="allprice" column="allprice"/>
+        <result property="createtime" column="createtime"/>
+        <result property="status" column="status"/>
+
+        <!--对多-->
+        <collection property="orderDetails" ofType="com.qf.entity.OrderDetail">
+            <id property="orderid" column="orderid"/>
+            <result property="gid" column="gid"/>
+            <result property="gname" column="gname"/>
+            <result property="gprice" column="gprice"/>
+            <result property="gimage" column="gimage"/>
+            <result property="gnumber" column="gnumber"/>
+            <result property="sprice" column="sprice"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryByUid" resultMap="MyResultMap">
+        
+    </select>
+</mapper>

@@ -27,12 +27,15 @@ public class ShopSearchServiceApplicationTests {
     public void add() throws IOException, SolrServerException {
 
         SolrInputDocument document = new SolrInputDocument();
-        document.addField("id",1);  //不加则自动生成一个id
-        document.addField("gname","小天鹅全自动滚筒洗衣机洗衣机洗衣机洗衣机");
-        document.addField("ginfo","省水省电，安静无噪音的一款全自动洗衣机");
-        document.addField("gimage","http://mm.midea.com/group1/M00/01/BD/ChAaY1oeUauAae7MAAYdq0AzW3U353.jpg");
-        document.addField("gprice","3668.99");
-        document.addField("gsave",500);
+        document.addField("id",12);  //不加则自动生成一个id
+        document.addField("gname","兰博基尼");
+        document.addField("ginfo","Lamborghini\n" +
+                "对兰博基尼而言，革命性创新深植于品牌核心：由航空科学所激发的设计灵感，以及V12发动机和碳纤维等科技的运用，令突破陈规成为品牌哲学的一部分。"
+                + "\n" +
+                "全新Aventador的诞生，正因突破自身的表现，令这款旗舰车型迅速成为超跑界的标杆，引领未来汽车潮流。是一个已成传奇的超级跑车家族。");
+        document.addField("gimage","group1/M00/00/00/wKh2qF0lyb6AephlAAR_3NTBjmI739.jpg");
+        document.addField("gprice",36899860.00);
+        document.addField("gsave",50);
 
         solrClient.add(document);
         solrClient.commit();
@@ -45,7 +48,7 @@ public class ShopSearchServiceApplicationTests {
 
     @Test
     public void delete() throws IOException, SolrServerException {
-        solrClient.deleteById("63d50eae-5f89-432a-9051-5b7394dad243");     //根据id删除
+        solrClient.deleteById("1");     //根据id删除
         //solrClient.deleteByQuery("*:*");//根据查询结果删除，查询的结果全部删除
         solrClient.commit();
     }

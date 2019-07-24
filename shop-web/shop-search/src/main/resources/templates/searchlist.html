@@ -11,6 +11,9 @@
     <script type="text/javascript" src="js/jquery.js" ></script>
     <script type="text/javascript" src="js/topNav.js" ></script>
     <script type="text/javascript" src="js/shop_list.js" ></script>
+
+    <!--引入登陆验证的JS-->
+    <script src="http://localhost:8084/js/login.js"></script>
 </head>
 <body>
 <!-- Header  -wll-2013/03/24 -->
@@ -20,7 +23,9 @@
         <div class="shop_hd_topNav_all">
             <!-- Header TopNav Left -->
             <div class="shop_hd_topNav_all_left">
-                <p>您好，欢迎来到<b><a href="/">ShoopNC商城</a></b>[<a >登录</a>][<a >注册</a>]</p>
+                <p id="pid">
+
+                </p>
             </div>
             <!-- Header TopNav Left End -->
 
@@ -704,11 +709,13 @@
             <ul>
                 <li th:each="good : ${goods}">
                     <dl>
-                        <dt><a ><img th:src="|http://192.168.118.168/${#strings.listSplit(good.gimage,'|')[0]}|" th:width="300" th:height="200" /></a></dt>
-                        <dd class="title"><a th:utext="${good.gname}">OCIAIZO春装水洗做旧短外套复古磨白短款牛仔外套春01C1417</a></dd>
+                        <dt><a th:href="|http://localhost:8083/page/${good.id}.html|">
+                            <img th:src="|http://192.168.118.168:8080/${#strings.listSplit(good.gimage,'|')[0]}|" th:width="300" th:height="200" />
+                        </a></dt>
+                        <dd class="title"><a th:href="|http://localhost:8083/page/${good.id}.html|" th:utext="${good.gname}">OCIAIZO春装水洗做旧短外套复古磨白短款牛仔外套春01C1417</a></dd>
                         <dd class="content">
                             <span class="goods_jiage" th:text="${#numbers.formatCurrency(good.gprice)}">￥<strong>249.00</strong></span>
-                            <span class="goods_chengjiao" th:text="|剩余库存 ${good.gsave} 件|">最近成交5笔</span>
+                            <span class="goods_chengjiao" th:text="|剩余库存  ${good.gsave}  件|">最近成交5笔</span>
                         </dd>
                     </dl>
                 </li>
