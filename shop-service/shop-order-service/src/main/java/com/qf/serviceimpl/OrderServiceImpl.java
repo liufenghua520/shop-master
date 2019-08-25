@@ -53,7 +53,7 @@ public class OrderServiceImpl implements IOrderService {
         int tableIndex = uids / 2 % 2 + 1;
         System.out.println("定位到表的位置："+tableIndex);
 
-        return orderMapper.queryByUid(uid,tableIndex);
+        return orderMapper.queryByUid(tableIndex,uid);
     }
 
     @Override
