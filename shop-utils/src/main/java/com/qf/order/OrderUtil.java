@@ -28,7 +28,7 @@ public class OrderUtil {
         StringBuffer stringBuffer = new StringBuffer("");
 
         //拼接当前时间（年月日）
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
         stringBuffer.append(sdf.format(new Date()));
 
         //获取用户id后四位,拼接
@@ -68,5 +68,10 @@ public class OrderUtil {
         }
 
         return buffer.toString();
+    }
+
+    public Integer parseUid(String oid) {
+        String uids = oid.substring(6,10);
+        return Integer.parseInt(uids);
     }
 }

@@ -15,7 +15,8 @@
 
         <!--对多-->
         <collection property="orderDetails" ofType="com.qf.entity.OrderDetail">
-            <id property="orderid" column="orderid"/>
+            <id property="id" column="id"/>
+            <result property="orderid" column="orderid"/>
             <result property="gid" column="gid"/>
             <result property="gname" column="gname"/>
             <result property="gprice" column="gprice"/>
@@ -24,8 +25,23 @@
             <result property="sprice" column="sprice"/>
         </collection>
     </resultMap>
+    <update id="updateOrderStatus">
+        update orders${tableIndex} set status = #{status} where orderid = #{orderid}
+    </update>
 
     <select id="queryByUid" resultMap="MyResultMap">
-        
+        select * from orders${tableIndex} o join order_detail${tableIndex} od on o.orderid = od.orderid
+        where o.uid = #{uid}
+        order by o.createtime desc
     </select>
+
+    <select id="selectByOid" resultType="com.qf.entity.Order">
+        select * from orders${tableIndex} where orderid = #{oid}
+    </select>
+
+    <insert id="insertOrder">
+        insert into orders${tableIndex} value
+        (#{order.orderid},#{order.uid},#{order.person},#{order.address},#{order.phone},
+        #{order.allprice},#{order.createtime},#{order.status})
+    </insert>
 </mapper>

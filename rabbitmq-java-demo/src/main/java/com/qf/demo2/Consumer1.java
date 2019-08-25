@@ -14,9 +14,8 @@ public class Consumer1 {
 
     public static void main(String[] args) throws IOException {
         Connection connection = ConnectionUtil.getConnection();
-
         Channel channel = connection.createChannel();
-
+        //声明队列
         channel.queueDeclare("myqueue1",false,false,false,null);
 
         //进行队列和交换机的绑定
@@ -26,7 +25,8 @@ public class Consumer1 {
         //监听队列
         channel.basicConsume("myqueue1",true,new DefaultConsumer(channel){
             @Override
-            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
+            public void handleDelivery(String consumerTag, Envelope envelope,
+                           AMQP.BasicProperties properties, byte[] body) throws IOException {
                 System.out.println("消费者1收到的消息："+new String(body));
             }
         });

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @date 2019/7/13 17:32
  */
 @Component
-public class MyRabbitListener {
+public class SearchRabbitListener {
 
     @Autowired
     private ISearchService searchService;

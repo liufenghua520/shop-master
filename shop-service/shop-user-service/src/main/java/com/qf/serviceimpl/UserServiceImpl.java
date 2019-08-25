@@ -30,11 +30,12 @@ public class UserServiceImpl implements IUserService {
         }
         //判断邮箱是否唯一
         QueryWrapper queryWrapper2 = new QueryWrapper();
-        queryWrapper2.eq("username",user.getUsername());
+        queryWrapper2.eq("email",user.getEmail());
         User u2 = userMapper.selectOne(queryWrapper);
         if (u2!=null){
             return -3;//邮箱已存在
         }
+
         //密码加密
         user.setPassword(BCryptUtil.hashPassword(user.getPassword()));
 

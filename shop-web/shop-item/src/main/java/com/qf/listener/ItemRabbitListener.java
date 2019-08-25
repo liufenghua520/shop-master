@@ -21,7 +21,7 @@ import java.util.Map;
  * @date 2019/7/13 17:39
  */
 @Component
-public class MyRabbitListener {
+public class ItemRabbitListener {
 
     @Autowired
     private Configuration configuration;

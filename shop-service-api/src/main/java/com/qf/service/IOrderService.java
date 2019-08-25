@@ -10,5 +10,7 @@ public interface IOrderService {
 
     Order queryByOid(String oid);
 
-    int insertOrder(Integer aid, User user);
+    Order insertOrder(Integer aid, User user);
+
+    int updateOrderStatus(String orderid, int status);
 }

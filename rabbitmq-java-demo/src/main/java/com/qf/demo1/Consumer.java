@@ -14,28 +14,25 @@ import java.util.concurrent.Executors;
  * @date 2019/7/13 15:58
  */
 public class Consumer {
-
     private static ExecutorService executorService = Executors.newFixedThreadPool(20);
 
     public static void main(String[] args) {
         Connection connection = ConnectionUtil.getConnection();
-
-        try {
+        try {   //建立连接
             Channel channel = connection.createChannel();
-
+            //声明队列
             channel.queueDeclare("myqueue",false,false,false,null);
-
+            //消费消息
             channel.basicConsume("myqueue",true,new DefaultConsumer(channel){
                 @Override
-                public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
-
+                public void handleDelivery(String consumerTag, Envelope envelope,
+                                           AMQP.BasicProperties properties, byte[] body) throws IOException {
                     executorService.submit(() -> {
                         try {
                             System.out.println("消费者接受到的消息："+new String(body,"utf-8"));
                         } catch (UnsupportedEncodingException e) {
                             e.printStackTrace();
                         }
-
                         try {
                             Thread.sleep(5000);
                         } catch (InterruptedException e) {

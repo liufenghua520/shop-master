@@ -14,17 +14,16 @@ import java.io.IOException;
 public class Provider {
 
     public static void main(String[] args) throws IOException {
+        //1.建立连接
         Connection connection = ConnectionUtil.getConnection();
-
+        //2.创建通道
         Channel channel = connection.createChannel();
-
-        //声明交换机
+        //3.声明交换机
         channel.exchangeDeclare("myexchange","fanout");
-
-        //发送消息
+        //4.发送消息
         String content = "hello,rabbitmq";
         channel.basicPublish("myexchange","",null,content.getBytes());
-
+        //5.关闭连接
         connection.close();
     }
 }

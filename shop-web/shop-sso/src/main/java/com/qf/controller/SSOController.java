@@ -72,10 +72,10 @@ public class SSOController {
         int code = (int) (Math.random()*9000)+1000;
         content = String.format(content,code);
 
-        Email email1Obj = new Email(email,"淘奋网验证码",content);
+        Email emailObj = new Email(email,"淘奋网验证码",content);
 
         redisTemplate.opsForValue().set(email+"_code",code);
-        rabbitTemplate.convertAndSend("email_exchange","",email1Obj);
+        rabbitTemplate.convertAndSend("email_exchange","",emailObj);
 
         return "succ";//发送验证码成功
     }
@@ -92,7 +92,7 @@ public class SSOController {
         Integer sendCode = (Integer) redisTemplate.opsForValue().get(user.getEmail()+"_code");
 
         if (sendCode==null || sendCode!=code){
-            return "redirect:/sso/toregister?error=-1"; //验证码错误
+            return "redirect:/sso/toregister?error=-1"; //-1:验证码错误
         }
 
         //进行注册
@@ -101,7 +101,7 @@ public class SSOController {
         if (result>0){
             return "redirect:/sso/tologin"; //跳转至登陆页面
         }
-        return "redirect:/sso/toregister?error="+result;
+        return "redirect:/sso/toregister?error="+result;    //-2:用户名已存在  -3:邮箱已存在
     }
 
     //-------------------------------------------------------------------------------------------------
@@ -127,9 +127,9 @@ public class SSOController {
         Map<String,Object> map = new HashMap<>();
 
         User user = userService.queryByUserName(username);
-
+        //判断用户是否存在？
         if (user==null){
-            map.put("code",1000);
+            map.put("code","1000");   //用户不存在
             return map;
         }
 
@@ -157,7 +157,7 @@ public class SSOController {
         //设置去登陆邮箱的地址
         String goEmail = "mail."+emailStr.substring(index+1);
 
-        map.put("code",0000);
+        map.put("code","0000");
         map.put("emailStr",emailStr2);
         map.put("goEmail",goEmail);
 

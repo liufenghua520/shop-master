@@ -109,4 +109,11 @@ public class ShopCartServiceImpl implements IShopCartService {
         }
         return 0;
     }
+
+    @Override
+    public int deleteCart(User user) {
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("uid",user.getId());
+        return shopCartMapper.delete(wrapper);
+    }
 }

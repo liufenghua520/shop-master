@@ -4,9 +4,10 @@
 <mapper namespace="com.qf.dao.OrderDetailMapper">
 
     <insert id="insertOrderDetails">
-        insert into order_detail values
+        insert into order_detail${tableIndex} values
         <foreach collection="orderDetails" item="detail" separator=",">
-            (null ,#{detail.orderid},#{detail.gid},#{detail.gname},#{detail.gprice},#{detail.gimage},#{detail.gnumber},#{detail.sprice})
+            (null ,#{detail.orderid},#{detail.gid},#{detail.gname},#{detail.gprice},
+            #{detail.gimage},#{detail.gnumber},#{detail.sprice})
         </foreach>
     </insert>
 </mapper>

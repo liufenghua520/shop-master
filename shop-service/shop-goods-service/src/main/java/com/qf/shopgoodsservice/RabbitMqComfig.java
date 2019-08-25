@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class RabbitMqComfig {
-
     @Bean(name = "squeue")
     public Queue getQueue1(){
         return new Queue("search_queue");
@@ -29,7 +28,6 @@ public class RabbitMqComfig {
     public FanoutExchange getFanoutExchange(){
         return new FanoutExchange("goods_exchange");
     }
-
     /**
      * 进行队列与交换机的绑定
      */
@@ -37,7 +35,6 @@ public class RabbitMqComfig {
     public Binding getBinding1(Queue squeue,FanoutExchange gexchange){
         return BindingBuilder.bind(squeue).to(gexchange);
     }
-
     @Bean
     public Binding getBinding2(Queue iqueue,FanoutExchange gexchange){
         return BindingBuilder.bind(iqueue).to(gexchange);

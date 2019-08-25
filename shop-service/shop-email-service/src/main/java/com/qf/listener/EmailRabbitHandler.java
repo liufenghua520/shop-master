@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
  * @date 2019/7/19 19:36
  */
 @Component
-public class MyrabbitHandler {
+public class EmailRabbitHandler {
 
     private ExecutorService executorService = Executors.newFixedThreadPool(5);
 
@@ -37,6 +37,7 @@ public class MyrabbitHandler {
 
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 
+            //创建一个Spring提供的邮件帮助对象
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
 
             try {
@@ -46,7 +47,7 @@ public class MyrabbitHandler {
                 messageHelper.setText(email.getContent());
                 messageHelper.setSentDate(new Date());
 
-                javaMailSender.send(mimeMessage);
+                javaMailSender.send(mimeMessage);   //发送邮件
 
             } catch (MessagingException e) {
                 e.printStackTrace();

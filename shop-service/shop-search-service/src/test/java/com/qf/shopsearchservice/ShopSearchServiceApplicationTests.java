@@ -49,7 +49,7 @@ public class ShopSearchServiceApplicationTests {
     @Test
     public void delete() throws IOException, SolrServerException {
         solrClient.deleteById("1");     //根据id删除
-        //solrClient.deleteByQuery("*:*");//根据查询结果删除，查询的结果全部删除
+//      solrClient.deleteByQuery("*:*");//根据查询结果删除，查询的结果全部删除
         solrClient.commit();
     }
 

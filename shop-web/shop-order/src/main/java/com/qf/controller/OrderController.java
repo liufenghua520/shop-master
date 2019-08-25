@@ -3,6 +3,7 @@ package com.qf.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.qf.aop.IsLogin;
 import com.qf.entity.Address;
+import com.qf.entity.Order;
 import com.qf.entity.ShopCart;
 import com.qf.entity.User;
 import com.qf.service.IAddressService;
@@ -58,7 +59,19 @@ public class OrderController {
     @IsLogin(mustLogin = true)
     @RequestMapping("/insert")
     public String insertOrder(Integer aid,User user){
-        orderService.insertOrder(aid,user);
-        return "succ";
+
+        //插入订单
+        Order order = orderService.insertOrder(aid, user);
+        return "redirect:/pay/alipay?orderid="+order.getOrderid();
+    }
+
+    @IsLogin(mustLogin = true)
+    @RequestMapping("/list")
+    public String listOrders(User user,Model model){
+
+        List<Order> orders = orderService.queryByUid(user.getId());
+
+        model.addAttribute("orders",orders);
+        return "orderlist";
     }
 }
